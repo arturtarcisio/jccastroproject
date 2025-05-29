@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface ContatoService {
 
     Contato save (Contato contato);
-    Optional<Contato> buscarContatoPeloCelular (String celular);
     List<Contato> listarTodosOsContatos();
+    void excluirContato (Long id);
 
 }

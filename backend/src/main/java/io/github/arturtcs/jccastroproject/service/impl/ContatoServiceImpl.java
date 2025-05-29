@@ -8,27 +8,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class ContatoServiceImpl implements ContatoService {
 
-    private final ContatoRepository customerRepository;
+    private final ContatoRepository contatoRepository;
 
     @Override
     @Transactional
     public Contato save(Contato contato) {
-        return customerRepository.save(contato);
-    }
-
-    @Override
-    public Optional<Contato> buscarContatoPeloCelular(String celular) {
-        return Optional.empty();
+        return contatoRepository.save(contato);
     }
 
     @Override
     public List<Contato> listarTodosOsContatos() {
-        return List.of();
+        return contatoRepository.findAll();
     }
+
+    @Override
+    public void excluirContato(Long id) {
+        if (contatoRepository.findById(id).isPresent())
+            contatoRepository.deleteById(id);
+    }
+
 }
