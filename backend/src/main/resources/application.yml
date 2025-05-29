@@ -1,5 +1,5 @@
-spring
-  application
-    name = jccastroproject
-  profiles
-    actives = dev
+spring:
+  profiles:
+    active: dev
+  application:
+    name: jccastroproject
