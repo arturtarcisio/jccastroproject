@@ -14,4 +14,11 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(ContatoNaoEncontradoException.class)
+    public ResponseEntity<String> handleContatoInexistente(ContatoNaoEncontradoException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
 }

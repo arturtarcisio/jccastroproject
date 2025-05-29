@@ -3,6 +3,7 @@ package io.github.arturtcs.jccastroproject.service.impl;
 import io.github.arturtcs.jccastroproject.domain.Contato;
 import io.github.arturtcs.jccastroproject.domain.DTO.ContatoDTO;
 import io.github.arturtcs.jccastroproject.exception.ContatoJaExisteException;
+import io.github.arturtcs.jccastroproject.exception.ContatoNaoEncontradoException;
 import io.github.arturtcs.jccastroproject.repository.ContatoRepository;
 import io.github.arturtcs.jccastroproject.service.ContatoService;
 import io.github.arturtcs.jccastroproject.util.ContatoMapper;
@@ -38,9 +39,27 @@ public class ContatoServiceImpl implements ContatoService {
     }
 
     @Override
+    @Transactional
     public void excluirContato(Long id) {
         if (contatoRepository.findById(id).isPresent())
             contatoRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Contato atualizarContato(Long id, ContatoDTO dto) {
+        Contato contato = contatoRepository.findById(id)
+                .orElseThrow(() -> new ContatoNaoEncontradoException(id));
+
+
+        contato.setNome(dto.nome());
+        contato.setEmail(dto.email());
+        contato.setCelular(dto.celular());
+        contato.setTelefone(dto.telefone());
+        contato.setFavorito(dto.favorito());
+        contato.setAtivo(dto.ativo());
+
+        return contatoRepository.save(contato);
     }
 
 }

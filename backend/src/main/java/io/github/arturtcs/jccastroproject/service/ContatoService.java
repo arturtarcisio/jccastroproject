@@ -11,5 +11,6 @@ public interface ContatoService {
     Contato cadastrarContato(ContatoDTO dto);
     List<Contato> listarTodosOsContatos();
     void excluirContato(Long id);
+    Contato atualizarContato(Long id, ContatoDTO dto);
 
 }
