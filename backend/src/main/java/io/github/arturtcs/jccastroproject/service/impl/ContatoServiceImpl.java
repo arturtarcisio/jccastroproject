@@ -48,18 +48,29 @@ public class ContatoServiceImpl implements ContatoService {
     @Override
     @Transactional
     public Contato atualizarContato(Long id, ContatoDTO dto) {
-        Contato contato = contatoRepository.findById(id)
+        var contatoExistente = contatoRepository.findById(id)
                 .orElseThrow(() -> new ContatoNaoEncontradoException(id));
 
+        verificarCelularUnico(dto.celular(), id);
 
-        contato.setNome(dto.nome());
-        contato.setEmail(dto.email());
-        contato.setCelular(dto.celular());
-        contato.setTelefone(dto.telefone());
-        contato.setFavorito(dto.favorito());
-        contato.setAtivo(dto.ativo());
+        if (dto.nome() != null) contatoExistente.setNome(dto.nome());
+        if (dto.email() != null) contatoExistente.setEmail(dto.email());
+        if (dto.celular() != null) contatoExistente.setCelular(dto.celular());
+        if (dto.telefone() != null) contatoExistente.setTelefone(dto.telefone());
+        if (dto.favorito() != null) contatoExistente.setFavorito(dto.favorito());
+        if (dto.ativo() != null) contatoExistente.setAtivo(dto.ativo());
 
-        return contatoRepository.save(contato);
+        return contatoRepository.save(contatoExistente);
     }
+
+    private void verificarCelularUnico(String celular, Long idAtualizacao) {
+        contatoRepository.findByCelular(celular).ifPresent(contato -> {
+            if (!contato.getId().equals(idAtualizacao)) {
+                throw new ContatoJaExisteException(celular);
+            }
+        });
+    }
+
+
 
 }
