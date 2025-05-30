@@ -1,5 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Estilos globais */
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container {
+  padding: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.actions {
+  margin-top: 20px;
+  button {
+    margin-right: 8px;
+  }
+}
+
+/* Tabela responsiva */
+mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
